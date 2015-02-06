@@ -21,7 +21,72 @@ var getTemp = function(){
    });
 }
 
-window.onload = function(){
+var showAlarmPopup = function(){
+   $("#mask").removeClass("hide");
+   $("#popup").removeClass("hide");
+}
+
+var hideAlarmPopup = function(){
+   $("#mask").addClass("hide");
+   $("#popup").addClass("hide");
+}
+
+var insertAlarm = function(hours, mins, ampm, alarmName, objid){
+   var alarm = $("<div id='"+objid+"'>").addClass("flexable");
+   alarm.append($("<div>").addClass("name").html(alarmName));
+   var del = $("<button>Delete</button>");
+   alarm.append($("<div>").addClass("time").html(hours+":"+mins+" "+ampm+" ")).append(del);
+   $("#alarms").append(alarm);
+   $("#"+objid+" button").click(function(){
+      deleteAlarm(objid);
+   });
+}
+
+var deleteAlarm = function(alarm){
+   Parse.initialize("4NZ1yKGTYN5Qe4gjwdWMuymE3WfUFm5so5GB6EST", "s8JE643U1LuxZC2HCUQ34i4xx87cyGAmcyhIao3A");
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var query = new Parse.Query(AlarmObject);
+
+   query.get(alarm, {
+      success: function(myObj) {
+         myObj.destroy({});
+         $("#"+alarm).remove();
+      }
+   });
+}
+
+var addAlarm = function(){
+   var hours = $("#hours option:selected").text();
+   var mins = $("#mins option:selected").text();
+   var ampm = $("#ampm option:selected").text();
+   var alarmName = $("#alarmName").val();
+
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var alarmObject = new AlarmObject();
+   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
+      success: function(object) {
+         insertAlarm(hours, mins, ampm, alarmName, object.id);
+         hideAlarmPopup();
+      }
+   });
+}
+
+var getAllAlarms = function(){
+   Parse.initialize("4NZ1yKGTYN5Qe4gjwdWMuymE3WfUFm5so5GB6EST", "s8JE643U1LuxZC2HCUQ34i4xx87cyGAmcyhIao3A");
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var query = new Parse.Query(AlarmObject);
+   query.find({
+      success: function(results) {
+         for (var i = 0; i < results.length; i++) { 
+            console.log(results[i].id);
+            insertAlarm(results[i].get("hours"), results[i].get("mins"), results[i].get("ampm"), results[i].get("alarmName"), results[i].id);
+         }
+      }
+   });
+}
+
+$(document).ready(function(){
    getTime();
    getTemp();
-}
+   getAllAlarms();
+});
