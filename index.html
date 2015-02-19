@@ -9,6 +9,8 @@
 <body>
 
 <script>
+var fb_userid;
+
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -85,6 +87,11 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
+
+        fb_userid = response.id;
+        getAllAlarms(response.id);
+        $("#alarmHeader").show();
+        $("#alarms").show();
     });
   }
 </script>
@@ -94,12 +101,6 @@
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
 
 <h1>An Awesome Clock</h1>
 <div>
@@ -111,6 +112,11 @@
 <br />
 
 <div id="alarmContainer">
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+    </fb:login-button>
+
+    <div id="status">
+    </div>
     <div id="alarmHeader" class="flexable">
         <h2>Alarms</h2>
         <input type="button" value="Add Alarm" class="button" onclick="showAlarmPopup();"/>
