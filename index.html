@@ -85,14 +85,15 @@ var fb_userid;
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      document.getElementById('personalHeader').innerHTML =
+        response.name + "'s alarms:";
 
         Parse.initialize("4NZ1yKGTYN5Qe4gjwdWMuymE3WfUFm5so5GB6EST", "s8JE643U1LuxZC2HCUQ34i4xx87cyGAmcyhIao3A");
         fb_userid = response.id;
         getAllAlarms(response.id);
         $("#alarmHeader").show();
         $("#alarms").show();
+        $("#login-button").hide();
     });
   }
 </script>
@@ -113,13 +114,11 @@ var fb_userid;
 <br />
 
 <div id="alarmContainer">
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
+    <div id="login-button"><fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></div>
 
-    <div id="status">
-    </div>
+    <div id="status"></div>
     <div id="alarmHeader" class="flexable">
-        <h2>Alarms</h2>
+        <h2 id="personalHeader"></h2>
         <input type="button" value="Add Alarm" class="button" onclick="showAlarmPopup();"/>
     </div>
     <div id="alarms"></div>
