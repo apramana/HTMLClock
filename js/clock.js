@@ -73,7 +73,7 @@ var addAlarm = function(){
 var getAllAlarms = function(userid){
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
-   query.equalTo("user", userid).find({
+   query.equalTo("userid", userid).find({
       success: function(results) {
          for (var i = 0; i < results.length; i++) { 
             console.log(results[i].id);
