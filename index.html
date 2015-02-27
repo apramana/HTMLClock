@@ -9,7 +9,7 @@
 <body>
 
 <script>
-var fb_userid;
+var fb_userid = null;
 
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -154,7 +154,7 @@ var fb_userid;
     <input type="text" id="alarmName" placeholder="Alarm Name" />      
     <div class="flexable">
         <input type="button" value="Cancel" class="button" onclick="hideAlarmPopup();"/>
-        <input type="button" value="Save Alarm" class="button" onclick="addAlarm();"/>
+        <input type="button" value="Save Alarm" class="button" id="saveButton" onclick="addAlarm();"/>
     </div>
 </div>
 </div>

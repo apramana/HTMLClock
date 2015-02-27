@@ -55,6 +55,11 @@ var deleteAlarm = function(alarm){
 }
 
 var addAlarm = function(){
+   if(fb_userid == null){
+      alert("You must be logged in to add an alarm.");
+      return false;
+   }
+
    var hours = $("#hours option:selected").text();
    var mins = $("#mins option:selected").text();
    var ampm = $("#ampm option:selected").text();
