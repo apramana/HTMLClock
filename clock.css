@@ -44,7 +44,3 @@ div {
 .hot {
    background-color: #E74C3C;
 }
-
-#alarmHeader, #alarms {
-   display:none;
-}
