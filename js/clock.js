@@ -43,6 +43,8 @@ var insertAlarm = function(hours, mins, ampm, alarmName, objid){
 }
 
 var deleteAlarm = function(alarm){
+   ga('send', 'event', 'Alarm', 'Delete');
+
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
 
@@ -59,6 +61,8 @@ var addAlarm = function(){
       alert("You must be logged in to add an alarm.");
       return false;
    }
+
+   ga('send', 'event', 'Alarm', 'Add');
 
    var hours = $("#hours option:selected").text();
    var mins = $("#mins option:selected").text();
